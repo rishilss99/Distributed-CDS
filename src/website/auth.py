@@ -12,6 +12,10 @@ def login():
     if user:
         if check_password_hash(user.password, password):
             flash('You have Logged in succesfully', category='success')
+        else:
+            flash('Incorrect password', category='error')
+    else:
+        flash('Email does not exist', category='error')
     return render_template("login.html")
 
 @auth.route('/logout')
@@ -26,7 +30,11 @@ def signup():
         first_name = request.form.get('first_name')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
-        if len(email) < 4:
+        
+        user = User.query.filter_by(email=email).first() # Check if user exists in database
+        if user:
+            flash('Email already exists.', category='error')
+        elif len(email) < 4:
             flash('Email must be greater than 4 characters.', category='error')
         elif len(first_name) < 2:
             flash('First name must be greater than 1 character', category='error')
