@@ -10,16 +10,10 @@ def login():
         email = request.form.get('email') # Get form data
         password = request.form.get('password')
         user = User.query.filter_by(email=email).first() # Check if user exists in database
-        if user:
-            if check_password_hash(user.password, password):
-                flash('You have Logged in succesfully', category='success')
-                login_user(user, remember=True) # Log user in using Flask-Login
-                return redirect(url_for('views.home'))
-            else:
-                flash('You have entered incorrect password', category='error')
-        else:
-            flash('This e-mail you entered does not exist', category='error')
-    return render_template("login.html", user = current_user) # Pass current user to template
+    if user:
+        if check_password_hash(user.password, password):
+            flash('You have Logged in succesfully', category='success')
+    return render_template("login.html")
 
 @auth.route('/logout')
 @login_required # Decorator which checks if user is logged in
@@ -35,10 +29,7 @@ def signup():
         first_name = request.form.get('first_name')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
-        user = User.query.filter_by(email=email).first() # Check if user exists in database
-        if user:
-            flash('Email already exists.', category='error')
-        elif len(email) < 4:
+        if len(email) < 4:
             flash('Email must be greater than 4 characters.', category='error')
         elif len(first_name) < 2:
             flash('First name must be greater than 1 character', category='error')
