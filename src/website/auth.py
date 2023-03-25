@@ -10,10 +10,17 @@ def login():
         email = request.form.get('email') # Get form data
         password = request.form.get('password')
         user = User.query.filter_by(email=email).first() # Check if user exists in database
-    if user:
-        if check_password_hash(user.password, password):
-            flash('You have Logged in succesfully', category='success')
-    return render_template("login.html")
+        if user:
+            if check_password_hash(user.password, password):
+                flash('You have Logged in succesfully', category='success')
+                login_user(user, remember=True) # Log user in
+                return redirect(url_for('views.home'))
+            else:
+                flash('Incorrect password, try again.', category='error')
+        else:
+            flash('Email does not exist.', category='error')
+
+    return render_template("login.html", user = current_user)
 
 @auth.route('/logout')
 @login_required # Decorator which checks if user is logged in
