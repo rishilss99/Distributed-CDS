@@ -2,18 +2,36 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
-auth = Blueprint('auth', __name__) # Create blueprint
+from . import cache
+from .cache import LRUCache
 from flask_login import login_user, login_required, logout_user, current_user
+
+auth = Blueprint('auth', __name__) # Create blueprint
+my_cache = LRUCache(100) # Create cache
+
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST': # check
         email = request.form.get('email') # Get form data
         password = request.form.get('password')
+
+        # Retrieve from cache
+        cached_email = cache.get('email')
+        
+        # Check if user exists in cache
+        if cached_email and cached_email == email:
+            flash('You have Logged in succesfully from cache', category='success')
+            return redirect(url_for('views.home'))
+        
         user = User.query.filter_by(email=email).first() # Check if user exists in database
         if user:
             if check_password_hash(user.password, password):
                 flash('You have Logged in succesfully', category='success')
                 login_user(user, remember=True) # Log user in
+                
+                # Store in cache
+                cache.set('email', email)
+                
                 return redirect(url_for('views.home'))
             else:
                 flash('Incorrect password, try again.', category='error')
@@ -25,6 +43,9 @@ def login():
 @auth.route('/logout')
 @login_required # Decorator which checks if user is logged in
 def logout():
+    # Remove from cache
+    cache.delete('email')
+    
     logout_user()
     return redirect(url_for('auth.login'))
 
