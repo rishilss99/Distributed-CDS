@@ -4,5 +4,36 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Welcome to the home page!</h1>        
+<body>
+    <h1>HDFS File Management</h1>   
+    <form action="/create_file" method="post">
+        <label for="hdfs_path">HDFS Path:</label>
+        <input type="text" name="hdfs_path"><br><br>
+        <label for="file_content">File Content:</label>
+        <input type="text" name="file_content"><br><br>
+        <input type="submit" value="Create File">
+    </form>
+    <br>
+    <form action="/upload_file" method="post" enctype="multipart/form-data">
+        <label for="file">Local File:</label>
+        <input type="file" name="file"><br><br>
+        <label for="hdfs_path">HDFS Path:</label>
+        <input type="text" name="hdfs_path"><br><br>
+        <input type="submit" value="Upload File">
+    </form>
+    <br>
+    <form action="/delete_file" method="get">
+        <label for="hdfs_path">HDFS Path:</label>
+        <input type="text" name="hdfs_path"><br><br>
+        <input type="submit" value="Delete File">
+    </form>
+    <br>
+    <form action="/download_file" method="get">
+        <label for="hdfs_path">HDFS Path:</label>
+        <input type="text" name="hdfs_path"><br><br>
+        <label for="local_file_path">Local File Path:</label>
+        <input type="text" name="local_file_path"><br><br>
+        <input type="submit" value="Download File">
+    </form>
+</body>
 {% endblock %}
