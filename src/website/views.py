@@ -58,7 +58,3 @@ def download_file():
     local_file_path = request.args.get('local_file_path')
     hdfs_client.download_file(hdfs_path, local_file_path)
     return render_template('success.html')
-
-    
-
-
