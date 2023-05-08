@@ -10,14 +10,14 @@ The number of images being uploaded to the internet each day is increasing at an
 Distributed-Image-Processing
 ├── README.md
 ├── src
+│   ├── main.py
 │   ├── instance
 │   │   ├── database.db
 │   ├── website
-│   │   ├── main.py
-│   │   ├── models.py
+│   │   ├───models.py
 │   │   ├── views.py
 │   │   ├── __init__.py
-│   │   ├── auth    
+│   │   ├── auth.py    
 │   │   ├── templates
 │   │   │   ├── index.html
 │   │   │   ├── login.html
