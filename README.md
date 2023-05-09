@@ -26,7 +26,32 @@ Distributed-Image-Processing
 │   │   │   └── success.html
 ├─── Report.pdf
 ├─── Presentation.ppt
-└─── color_quantizer_kmeans.py
+├─── color_quantizer_kmeans.py
+├─── Huffman Coding with K-Means
+│   ├── Makefile
+│   ├── img1.hpg
+│   ├── img1.ppm
+│   ├── kmeans.py
+│   ├── kpeg.log
+│   ├── my_program
+│   ├── quantized_image_1.jpeg
+│   ├── quantized_image_1.jpg
+│   ├── new.py
+│   ├── src
+│   │   ├── base.cpp
+│   │   ├── Image.cpp
+│   │   ├── MCU.cpp
+│   │   ├── run.cpp
+│   │   ├── ssim.cpp
+│   │   ├── Transform.cpp
+│   │   ├── Utility.cpp
+│   │   ├── Decoder.cpp
+│   │   ├── HuffmanTree.cpp
+│   ├── include (All Libs)
+│   ├── build (Builds .O files)
+
+
+
 ```
 
 ### Prerequisites
